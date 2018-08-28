@@ -1,6 +1,6 @@
 ﻿namespace Pastebin
 {
-    partial class FormMain
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -58,9 +58,9 @@
             this.LabelLogin.AutoSize = true;
             this.LabelLogin.Location = new System.Drawing.Point(12, 8);
             this.LabelLogin.Name = "LabelLogin";
-            this.LabelLogin.Size = new System.Drawing.Size(124, 13);
+            this.LabelLogin.Size = new System.Drawing.Size(120, 13);
             this.LabelLogin.TabIndex = 1;
-            this.LabelLogin.Text = "Please Log in to use app";
+            this.LabelLogin.Text = "Please log in to use app";
             // 
             // label1
             // 
@@ -84,7 +84,7 @@
             this.textBoxContent.Name = "textBoxContent";
             this.textBoxContent.Size = new System.Drawing.Size(221, 20);
             this.textBoxContent.TabIndex = 5;
-            this.textBoxContent.Click += new System.EventHandler(this.textBox2_Clicked);
+            this.textBoxContent.Click += new System.EventHandler(this.textBoxContent_Clicked);
             // 
             // label2
             // 
@@ -120,6 +120,7 @@
             this.comboBoxExpiration.Name = "comboBoxExpiration";
             this.comboBoxExpiration.Size = new System.Drawing.Size(221, 21);
             this.comboBoxExpiration.TabIndex = 10;
+            this.comboBoxExpiration.Text = "Please Select A Value.";
             // 
             // comboBoxExposure
             // 
@@ -128,6 +129,7 @@
             this.comboBoxExposure.Name = "comboBoxExposure";
             this.comboBoxExposure.Size = new System.Drawing.Size(221, 21);
             this.comboBoxExposure.TabIndex = 11;
+            this.comboBoxExposure.Text = "Please Select A Value.";
             // 
             // comboBoxSyntax
             // 
@@ -136,6 +138,7 @@
             this.comboBoxSyntax.Name = "comboBoxSyntax";
             this.comboBoxSyntax.Size = new System.Drawing.Size(221, 21);
             this.comboBoxSyntax.TabIndex = 13;
+            this.comboBoxSyntax.Text = "Please Select A Value.";
             // 
             // label5
             // 
@@ -156,7 +159,7 @@
             this.buttonSubmit.UseVisualStyleBackColor = true;
             this.buttonSubmit.Click += new System.EventHandler(this.buttonSubmit_Click);
             // 
-            // FormMain
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -174,7 +177,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LabelLogin);
             this.Controls.Add(this.buttonLogin);
-            this.Name = "FormMain";
+            this.Name = "MainForm";
             this.Text = "Pastebin";
             this.ResumeLayout(false);
             this.PerformLayout();

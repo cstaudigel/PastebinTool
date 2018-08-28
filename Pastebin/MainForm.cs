@@ -1,25 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TPJ.Encrypt;
+using Pastebin.Properties;
 
 namespace Pastebin
 {
-    public partial class FormMain : Form
+    public partial class MainForm : Form
     {
-        private readonly string _devKey = "12c3f5c3ad8c9ae99e7c8c383be8be09";
         private Dictionary<string, string> _languageMap { get; }
+        private Dictionary<string, string> _expirationDictionary { get; }
+        private Dictionary<string, int> _accessDictionary { get; }
+        private bool _loggedIn;
+        private readonly Settings _settings = Settings.Default;
 
 
-        public FormMain()
+        public MainForm()
         {
             _languageMap = new Dictionary<string, string>();
+            _expirationDictionary = new Dictionary<string, string>
+            {
+                { "Never", "N" },
+                { "10 Minutes", "10M" },
+                { "1 Hour", "1H" },
+                { "1 Day", "1D" },
+                { "1 Week", "1W" },
+                { "2 Weeks", "2W" },
+                { "1 Month", "1M" },
+                { "6 Months", "6M" },
+                { "1 Year", "1Y" }
+            };
+            _accessDictionary = new Dictionary<string, int>
+            {
+                { "Public", 0 },
+                { "Unlisted", 1 },
+                { "Private", 2 }
+            };
+
+            _loggedIn = string.IsNullOrEmpty(_settings.__userKey);
+
 
             InitializeComponent();
             SetLanguages();
@@ -29,6 +47,15 @@ namespace Pastebin
                 comboBoxSyntax.Items.Add(s);
             }
 
+            foreach (string s in _accessDictionary.Keys)
+            {
+                comboBoxExposure.Items.Add(s);
+            }
+
+            foreach (string s in _expirationDictionary.Keys)
+            {
+                comboBoxExpiration.Items.Add(s);
+            }
         }
 
         private void SetLanguages()
@@ -289,14 +316,44 @@ namespace Pastebin
 
         }
 
-        private void textBox2_Clicked(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
+            if (_loggedIn)
+            {
+                var username = _settings.__userName;
 
+                LabelLogin.Text = "Welcome, " + username;
+                buttonLogin.Text = "Log Out";
+                buttonLogin.Click -= buttonLogin_Click;
+                buttonLogin.Click += buttonLogin_LogOut;
+            }
+        }
+
+        private void textBoxContent_Clicked(object sender, EventArgs e)
+        {
+            using (var f = new CodeForm(textBoxContent))
+            {
+                f.ShowDialog();
+            }
         }
 
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
             // Submit
+        }
+
+        private void buttonLogin_LogOut(object sender, EventArgs e)
+        {
+            _settings.__userKey = string.Empty;
+            _settings.__userName = string.Empty;
+
+            buttonLogin.Click -= buttonLogin_LogOut;
+            buttonLogin.Click += buttonLogin_Click;
+
+            buttonLogin.Text = "Log In";
+            LabelLogin.Text = "Please log in to use app";
+
+
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
